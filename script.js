@@ -6,9 +6,10 @@ var ballSpeedY = 7;
 
 const BRICK_W = 100;
 const BRICK_H = 50;
-const BRICK_COUNT = 8;
+const BRICK_COLS = 8;
 const BRICK_GAP = 2;
-var bricksGrid = new Array(BRICK_COUNT);
+const BRICK_ROWS = 4;
+var bricksGrid = new Array(BRICK_COLS);
 
 const PADDLE_WIDTH = 100;
 const PADDLE_THICKNESS = 10;
@@ -42,12 +43,13 @@ function updateMousePos(evt) {
 }
 
 function brickReset() {
-    for (let i = 0; i < BRICK_COUNT; i++) {
-        if(Math.random() < 0.5) {
-            bricksGrid[i] = true;
-        } else {
-            bricksGrid[i] = false;
-        }
+    for (let i = 0; i < BRICK_COLS; i++) {
+        bricksGrid[i] = true;
+        // if(Math.random() < 0.5) {
+        //     bricksGrid[i] = true;
+        // } else {
+        //     bricksGrid[i] = false;
+        // }
     }
 }
 
@@ -73,11 +75,14 @@ function drawAll() {
 }
 
 function drawBricks() {
-    for (let i = 0; i < bricksGrid.length; i++) {
-        if(bricksGrid[i]) {
-            colorRectangle(BRICK_W * i, 0, BRICK_W - BRICK_GAP, BRICK_H, 'blue');        
-        }
+    for (let eachRow = 0; eachRow < BRICK_ROWS; eachRow++) {
+        for (let eachCol = 0; eachCol < bricksGrid.length; eachCol++) {
+            if(bricksGrid[eachCol]) {
+                colorRectangle(BRICK_W * eachCol, BRICK_H * eachRow, BRICK_W - BRICK_GAP, BRICK_H - BRICK_GAP, 'blue');        
+            }
+        }        
     }
+    
 }
 
 function bounceBallOnEges() {
