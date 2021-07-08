@@ -6,11 +6,9 @@ var ballSpeedY = 7;
 
 const BRICK_W = 100;
 const BRICK_H = 50;
-const BRICK_COUNT = 4;
-var brick1 = true;
-var brick2 = true;
-var brick3 = true;
-var brick4 = true;
+const BRICK_COUNT = 8;
+const BRICK_GAP = 2;
+var bricksGrid = new Array(BRICK_COUNT);
 
 const PADDLE_WIDTH = 100;
 const PADDLE_THICKNESS = 10;
@@ -28,6 +26,8 @@ window.onload = function() {
     setInterval(updateAll, 1000/framesPerSecond);   
     
     canvas.addEventListener('mousemove', updateMousePos);
+
+    brickReset();
 }
 
 function updateMousePos(evt) {
@@ -39,6 +39,16 @@ function updateMousePos(evt) {
 
     paddleX = mouseX - (PADDLE_WIDTH / 2);
 
+}
+
+function brickReset() {
+    for (let i = 0; i < BRICK_COUNT; i++) {
+        if(Math.random() < 0.5) {
+            bricksGrid[i] = true;
+        } else {
+            bricksGrid[i] = false;
+        }
+    }
 }
 
 function updateAll() {
@@ -56,23 +66,18 @@ function drawAll() {
     colorRectangle(paddleX, canvas.height - PADDLE_DIST_FROM_EDGE, PADDLE_WIDTH, PADDLE_THICKNESS, 'white');
     drawBricks();
 
-    colorText(`${mouseX}, ${mouseY}`, mouseX, mouseY, 'yellow');
+
+    var mouseBrickCol = mouseX / BRICK_W;
+    var mouseBrickRow = mouseY / BRICK_H;
+    colorText(`${mouseBrickCol}, ${mouseBrickRow}`, mouseX, mouseY, 'yellow');
 }
 
 function drawBricks() {
-    if(brick1){
-        colorRectangle(0, 0, BRICK_W, BRICK_H, 'blue');            
+    for (let i = 0; i < bricksGrid.length; i++) {
+        if(bricksGrid[i]) {
+            colorRectangle(BRICK_W * i, 0, BRICK_W - BRICK_GAP, BRICK_H, 'blue');        
+        }
     }
-    if(brick2){
-        colorRectangle(BRICK_W + 2, 0, BRICK_W, BRICK_H, 'blue');        
-    }
-    if(brick3){
-        colorRectangle((2 * BRICK_W + 4), 0, BRICK_W, BRICK_H, 'blue');        
-    }
-    if(brick4){
-        colorRectangle((3 * BRICK_W + 6), 0, BRICK_W, BRICK_H, 'blue');        
-    }
-
 }
 
 function bounceBallOnEges() {
