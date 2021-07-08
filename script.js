@@ -4,6 +4,14 @@ var ballY = 75;
 var ballSpeedX = 5;
 var ballSpeedY = 7;
 
+const BRICK_W = 100;
+const BRICK_H = 50;
+const BRICK_COUNT = 4;
+var brick1 = true;
+var brick2 = true;
+var brick3 = true;
+var brick4 = true;
+
 const PADDLE_WIDTH = 100;
 const PADDLE_THICKNESS = 10;
 const PADDLE_DIST_FROM_EDGE = 60;
@@ -46,8 +54,25 @@ function drawAll() {
     colorRectangle(0, 0, canvas.width, canvas.height, 'black');
     colorCircle(ballX, ballY, 10, 'white');
     colorRectangle(paddleX, canvas.height - PADDLE_DIST_FROM_EDGE, PADDLE_WIDTH, PADDLE_THICKNESS, 'white');
+    drawBricks();
 
     colorText(`${mouseX}, ${mouseY}`, mouseX, mouseY, 'yellow');
+}
+
+function drawBricks() {
+    if(brick1){
+        colorRectangle(0, 0, BRICK_W, BRICK_H, 'blue');            
+    }
+    if(brick2){
+        colorRectangle(BRICK_W + 2, 0, BRICK_W, BRICK_H, 'blue');        
+    }
+    if(brick3){
+        colorRectangle((2 * BRICK_W + 4), 0, BRICK_W, BRICK_H, 'blue');        
+    }
+    if(brick4){
+        colorRectangle((3 * BRICK_W + 6), 0, BRICK_W, BRICK_H, 'blue');        
+    }
+
 }
 
 function bounceBallOnEges() {
