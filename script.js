@@ -68,7 +68,12 @@ function moveAll() {
         ballY < paddleBottomEdgeY && // above bottom of paddle
         ballX > paddleLeftEdgeX && // right of the left side of paddle
         ballX < paddleRightEdgeX) { // left of the left side of paddle
+
         ballSpeedY *= -1;
+
+        var centerOfPaddleX = paddleX + PADDLE_WIDTH / 2;
+        var ballDistFromPaddleCenterX = ballX - centerOfPaddleX;
+        ballSpeedX = ballDistFromPaddleCenterX * 0.35;
     }
 }
 
