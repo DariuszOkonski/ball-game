@@ -5,6 +5,12 @@ let ballY = 75;
 let ballSpeedX = 5;
 let ballSpeedY = 7;
 
+const BRICK_W = 100;
+const BRICK_H = 50;
+const BRICK_COUNT = 8
+
+let brickGrid = new Array(BRICK_COUNT);
+
 const PADDLE_WIDTH = 100;
 const PADDLE_THICKNESS = 10;
 const PADDLE_DIST_FROM_EDGE = 60;
@@ -22,6 +28,11 @@ function updateMousePos(evt) {
     paddleX = mouseX - PADDLE_WIDTH/2;
 }
     
+function brickReset() {
+    for(let i = 0; i < BRICK_COUNT; i++) {
+        brickGrid[i] = Math.random() < 0.5 ? true : false;
+    }
+}
 
 window.onload = function() {
     canvas = document.getElementById("gameCanvas");
@@ -31,6 +42,8 @@ window.onload = function() {
     setInterval(updateAll, 1000/framesPerSecond);
 
     canvas.addEventListener('mousemove', updateMousePos);
+
+    brickReset();
 }
 
 function updateAll() {
@@ -81,6 +94,14 @@ function moveAll() {
     }
 }
 
+function drawBricks() {
+    for(let i = 0; i < BRICK_COUNT; i++) {
+        if(brickGrid[i]) {
+            colorRect(BRICK_W*i, 0, BRICK_W-2, BRICK_H, 'blue');
+        }            
+    }       
+}
+
 function drawAll() {
     //clear screen
     colorRect(0,0,canvas.width, canvas.height, 'black');
@@ -93,6 +114,9 @@ function drawAll() {
 
     //draw square by pointer
     colorText(mouseX+","+mouseY, mouseX, mouseY, 'yellow');    
+
+    // draw single brick
+    drawBricks();
 }
 
 
