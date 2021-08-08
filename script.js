@@ -10,14 +10,18 @@ const PADDLE_THICKNESS = 10;
 const PADDLE_DIST_FROM_EDGE = 60;
 let paddleX = 400;
 
+let mouseY;
+let mouseX;
+
 function updateMousePos(evt) {
     var rect = canvas.getBoundingClientRect();
     var root = document.documentElement;
 
-    var mouseX = evt.clientX - rect.left - root.scrollLeft;
-    // var mouseY = evt.clientY - rect.top - root.scrollTop;
+    mouseX = evt.clientX - rect.left - root.scrollLeft;
+    mouseY = evt.clientY - rect.top - root.scrollTop;
     paddleX = mouseX - PADDLE_WIDTH/2;
 }
+    
 
 window.onload = function() {
     canvas = document.getElementById("gameCanvas");
@@ -86,7 +90,9 @@ function drawAll() {
 
     //draw paddle
     colorRect(paddleX, canvas.height - PADDLE_DIST_FROM_EDGE, PADDLE_WIDTH, PADDLE_THICKNESS, 'white');
-    
+
+    //draw square by pointer
+    colorText(mouseX+","+mouseY, mouseX, mouseY, 'yellow');    
 }
 
 
@@ -101,4 +107,9 @@ function colorCircle(centerX, centerY, radius, fillColor, ) {
     canvasContext.beginPath();
     canvasContext.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
     canvasContext.fill();
+}
+
+function colorText(showWords, textX, textY, fillColor) {
+    canvasContext.fillStyle = fillColor;
+    canvasContext.fillText(showWords, textX, textY);
 }
