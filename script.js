@@ -8,6 +8,8 @@ let ballSpeedY = 7;
 const BRICK_W = 100;
 const BRICK_H = 50;
 const BRICK_COUNT = 8
+const BRICK_GAP = 2;
+const BRICKS_ROWS = 2;
 
 let brickGrid = new Array(BRICK_COUNT);
 
@@ -30,7 +32,9 @@ function updateMousePos(evt) {
     
 function brickReset() {
     for(let i = 0; i < BRICK_COUNT; i++) {
-        brickGrid[i] = Math.random() < 0.5 ? true : false;
+        // brickGrid[i] = Math.random() < 0.5 ? true : false;
+        brickGrid[i] = true
+        
     }
 }
 
@@ -95,11 +99,11 @@ function moveAll() {
 }
 
 function drawBricks() {
-    for(let i = 0; i < BRICK_COUNT; i++) {
-        if(brickGrid[i]) {
-            colorRect(BRICK_W*i, 0, BRICK_W-2, BRICK_H, 'blue');
-        }            
-    }       
+    for(let eachRow = 0; eachRow < BRICKS_ROWS; eachRow++) {
+        for(let i = 0; i < BRICK_COUNT; i++) {
+            colorRect(BRICK_W*i, BRICK_H*eachRow, BRICK_W-BRICK_GAP, BRICK_H-BRICK_GAP, 'blue');
+        }
+    } 
 }
 
 function drawAll() {
@@ -113,7 +117,10 @@ function drawAll() {
     colorRect(paddleX, canvas.height - PADDLE_DIST_FROM_EDGE, PADDLE_WIDTH, PADDLE_THICKNESS, 'white');
 
     //draw square by pointer
-    colorText(mouseX+","+mouseY, mouseX, mouseY, 'yellow');    
+
+    let mouseBrickCol = mouseX / BRICK_W;
+    let mouseBrickRow = mouseY / BRICK_H;
+    colorText(mouseBrickCol+" - "+mouseBrickRow, mouseX, mouseY, 'yellow');    
 
     // draw single brick
     drawBricks();
