@@ -32,8 +32,8 @@ function updateMousePos(evt) {
     
 function brickReset() {
     for(let i = 0; i < BRICK_COLS * BRICKS_ROWS; i++) {
-        brickGrid[i] = Math.random() < 0.5 ? true : false;
-        // brickGrid[i] = true        
+        // brickGrid[i] = Math.random() < 0.5 ? true : false;
+        brickGrid[i] = true        
     }
 }
 
@@ -131,6 +131,12 @@ function drawAll() {
     let mouseBrickRow = Math.floor(mouseY / BRICK_H);
     let brickIndexUnderMouse =rowColToArrayIndex(mouseBrickCol, mouseBrickRow);
     colorText(mouseBrickCol+" - "+mouseBrickRow+" | brick nr: "+brickIndexUnderMouse , mouseX, mouseY, 'yellow');    
+
+
+    if(brickIndexUnderMouse >= 0 && brickIndexUnderMouse < BRICK_COLS * BRICKS_ROWS) {
+        brickGrid[brickIndexUnderMouse] = false;
+    }
+
 }
 
 function colorRect(topLeftX, topLeftY, boxWidth, boxHeight, fillColor) {
