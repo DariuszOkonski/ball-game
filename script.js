@@ -83,10 +83,12 @@ function moveAll() {
     //draw square by pointer
     let ballBrickCol = Math.floor(ballX / BRICK_W);
     let ballBrickRow = Math.floor(ballY / BRICK_H);
-    let brickIndexUnderBall =rowColToArrayIndex(ballBrickCol, ballBrickRow);
+    let brickIndexUnderMouse =rowColToArrayIndex(ballBrickCol, ballBrickRow);
         
-    if(brickIndexUnderBall >= 0 && brickIndexUnderBall < BRICK_COLS * BRICKS_ROWS) {
-        brickGrid[brickIndexUnderBall] = false;
+
+    if(ballBrickCol >= 0 && ballBrickCol < BRICK_COLS && 
+        ballBrickRow >=0 && ballBrickRow < BRICKS_ROWS) {
+        brickGrid[brickIndexUnderMouse] = false;
     }
 
 
