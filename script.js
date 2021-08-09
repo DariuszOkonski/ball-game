@@ -97,11 +97,15 @@ function moveAll() {
     }
 }
 
+function rowColToArrayIndex(col, row) {
+    return BRICK_COLS * row + col;
+}
+
 function drawBricks() {
     for(let eachRow = 0; eachRow < BRICKS_ROWS; eachRow++) {
         for(let eachCol = 0; eachCol < BRICK_COLS; eachCol++) {
 
-            let arrayIndex = BRICK_COLS * eachRow + eachCol;
+            let arrayIndex = rowColToArrayIndex(eachCol, eachRow);
             if(brickGrid[arrayIndex]) {
                 colorRect(BRICK_W*eachCol, BRICK_H*eachRow, BRICK_W-BRICK_GAP, BRICK_H-BRICK_GAP, 'blue');                
             }
@@ -118,15 +122,15 @@ function drawAll() {
 
     //draw paddle
     colorRect(paddleX, canvas.height - PADDLE_DIST_FROM_EDGE, PADDLE_WIDTH, PADDLE_THICKNESS, 'white');
-
-    //draw square by pointer
-
-    let mouseBrickCol = Math.floor(mouseX / BRICK_W);
-    let mouseBrickRow = Math.floor(mouseY / BRICK_H);
-    colorText(mouseBrickCol+" - "+mouseBrickRow, mouseX, mouseY, 'yellow');    
-
+    
     // draw single brick
     drawBricks();
+    
+    //draw square by pointer
+    let mouseBrickCol = Math.floor(mouseX / BRICK_W);
+    let mouseBrickRow = Math.floor(mouseY / BRICK_H);
+    let brickIndexUnderMouse =rowColToArrayIndex(mouseBrickCol, mouseBrickRow);
+    colorText(mouseBrickCol+" - "+mouseBrickRow+" | brick nr: "+brickIndexUnderMouse , mouseX, mouseY, 'yellow');    
 }
 
 function colorRect(topLeftX, topLeftY, boxWidth, boxHeight, fillColor) {
