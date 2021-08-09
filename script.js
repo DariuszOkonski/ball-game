@@ -5,11 +5,11 @@ let ballY = 75;
 let ballSpeedX = 5;
 let ballSpeedY = 7;
 
-const BRICK_W = 100;
-const BRICK_H = 50;
-const BRICK_COLS = 8
+const BRICK_W = 80;
+const BRICK_H = 20;
+const BRICK_COLS = 10;
 const BRICK_GAP = 2;
-const BRICKS_ROWS = 4;
+const BRICKS_ROWS = 14;
 
 let brickGrid = new Array(BRICK_COLS * BRICKS_ROWS);
 
@@ -121,8 +121,8 @@ function drawAll() {
 
     //draw square by pointer
 
-    let mouseBrickCol = mouseX / BRICK_W;
-    let mouseBrickRow = mouseY / BRICK_H;
+    let mouseBrickCol = Math.floor(mouseX / BRICK_W);
+    let mouseBrickRow = Math.floor(mouseY / BRICK_H);
     colorText(mouseBrickCol+" - "+mouseBrickRow, mouseX, mouseY, 'yellow');    
 
     // draw single brick
