@@ -79,6 +79,17 @@ function moveAll() {
         ballReset();
     }
 
+
+    //draw square by pointer
+    let ballBrickCol = Math.floor(ballX / BRICK_W);
+    let ballBrickRow = Math.floor(ballY / BRICK_H);
+    let brickIndexUnderBall =rowColToArrayIndex(ballBrickCol, ballBrickRow);
+        
+    if(brickIndexUnderBall >= 0 && brickIndexUnderBall < BRICK_COLS * BRICKS_ROWS) {
+        brickGrid[brickIndexUnderBall] = false;
+    }
+
+
     var paddleTopEdgeY = canvas.height - PADDLE_DIST_FROM_EDGE;
     var paddleBottomEdgeY = paddleTopEdgeY + PADDLE_THICKNESS;
     var paddleLeftEdgeX = paddleX;
@@ -125,17 +136,6 @@ function drawAll() {
     
     // draw single brick
     drawBricks();
-    
-    //draw square by pointer
-    let mouseBrickCol = Math.floor(mouseX / BRICK_W);
-    let mouseBrickRow = Math.floor(mouseY / BRICK_H);
-    let brickIndexUnderMouse =rowColToArrayIndex(mouseBrickCol, mouseBrickRow);
-    colorText(mouseBrickCol+" - "+mouseBrickRow+" | brick nr: "+brickIndexUnderMouse , mouseX, mouseY, 'yellow');    
-
-
-    if(brickIndexUnderMouse >= 0 && brickIndexUnderMouse < BRICK_COLS * BRICKS_ROWS) {
-        brickGrid[brickIndexUnderMouse] = false;
-    }
 
 }
 
