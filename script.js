@@ -6,10 +6,10 @@ let ballSpeedX = 5;
 let ballSpeedY = 7;
 
 const BRICK_W = 80;
-const BRICK_H = 20;
+const BRICK_H = 40; // temporarily doubled
 const BRICK_COLS = 10;
 const BRICK_GAP = 2;
-const BRICKS_ROWS = 14;
+const BRICKS_ROWS = 7; // temporarily halved
 
 let brickGrid = new Array(BRICK_COLS * BRICKS_ROWS);
 
@@ -28,6 +28,12 @@ function updateMousePos(evt) {
     mouseX = evt.clientX - rect.left - root.scrollLeft;
     mouseY = evt.clientY - rect.top - root.scrollTop;
     paddleX = mouseX - PADDLE_WIDTH/2;
+
+    // cheat / hack to test ball in any position
+    ballX = mouseX;
+    ballY = mouseY;
+    ballSpeedX = 3;
+    ballSpeedY = -4;
 }
     
 function brickReset() {
@@ -93,7 +99,20 @@ function ballBrickHandling() {
 
         if(brickGrid[brickIndexUnderBall]) {
             brickGrid[brickIndexUnderBall] = false;
-            ballSpeedY *= -1;
+            
+            let prevBallX = ballX - ballSpeedX;
+            let prevBallY = ballY - ballSpeedY;
+            let prevBrickCol = Math.floor(prevBallX / BRICK_W);
+            let prevBrickRow = Math.floor(prevBallY / BRICK_H);
+            
+            if(prevBrickCol != ballBrickCol) {
+                ballSpeedY *= -1;
+            }
+
+            if(prevBrickRow != ballBrickRow) {
+                ballSpeedY *= -1;
+            }
+
         }
     }
 }
