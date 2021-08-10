@@ -6,12 +6,12 @@ let ballSpeedX = 5;
 let ballSpeedY = 7;
 
 const BRICK_W = 80;
-const BRICK_H = 40; // temporarily doubled
+const BRICK_H = 20;
 const BRICK_COLS = 10;
 const BRICK_GAP = 2;
-const BRICKS_ROWS = 7; // temporarily halved
-
+const BRICKS_ROWS = 14;
 let brickGrid = new Array(BRICK_COLS * BRICKS_ROWS);
+let bricksLeft = 0;
 
 const PADDLE_WIDTH = 100;
 const PADDLE_THICKNESS = 10;
@@ -37,9 +37,16 @@ function updateMousePos(evt) {
 }
     
 function brickReset() {
-    for(let i = 0; i < BRICK_COLS * BRICKS_ROWS; i++) {
+    bricksLeft = 0;
+    let i;
+    for(i = 0; i < 3*BRICK_COLS; i++) { 
+        brickGrid[i] = false;
+    }
+
+    for(; i < BRICK_COLS * BRICKS_ROWS; i++) {
         // brickGrid[i] = Math.random() < 0.5 ? true : false;
-        brickGrid[i] = true        
+        brickGrid[i] = true  
+        bricksLeft++;      
     }
 }
 
@@ -99,6 +106,8 @@ function ballBrickHandling() {
 
         if(brickGrid[brickIndexUnderBall]) {
             brickGrid[brickIndexUnderBall] = false;
+            bricksLeft--;
+            console.log(bricksLeft)
             
             let prevBallX = ballX - ballSpeedX;
             let prevBallY = ballY - ballSpeedY;
@@ -169,7 +178,7 @@ function rowColToArrayIndex(col, row) {
     return BRICK_COLS * row + col;
 }
 
-function drawBricks() {
+function drawBricks() {    
     for(let eachRow = 0; eachRow < BRICKS_ROWS; eachRow++) {
         for(let eachCol = 0; eachCol < BRICK_COLS; eachCol++) {
 
