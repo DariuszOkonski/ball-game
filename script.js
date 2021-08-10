@@ -32,7 +32,7 @@ function updateMousePos(evt) {
     // cheat / hack to test ball in any position
     ballX = mouseX;
     ballY = mouseY;
-    ballSpeedX = 3;
+    ballSpeedX = 4;
     ballSpeedY = -4;
 }
     
@@ -105,11 +105,31 @@ function ballBrickHandling() {
             let prevBrickCol = Math.floor(prevBallX / BRICK_W);
             let prevBrickRow = Math.floor(prevBallY / BRICK_H);
             
+            let bothTestsFailed = true;
+
             if(prevBrickCol != ballBrickCol) {
-                ballSpeedY *= -1;
+                let adjBrickSide = rowColToArrayIndex(prevBrickCol, ballBrickRow);
+
+                if(brickGrid[adjBrickSide] == false) {
+                    ballSpeedX *= -1;  
+                    bothTestsFailed = false;                  
+                }
+
             }
 
             if(prevBrickRow != ballBrickRow) {
+                let adjBrickTopBot = rowColToArrayIndex(ballBrickCol, prevBrickRow)
+
+                if(brickGrid[adjBrickTopBot] == false) {
+                    ballSpeedY *= -1;
+                    bothTestsFailed = false;
+                }
+
+            }
+
+            // armpit case, prevent ball going through
+            if(bothTestsFailed) {
+                ballSpeedX *= -1;
                 ballSpeedY *= -1;
             }
 
