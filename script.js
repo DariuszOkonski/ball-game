@@ -77,15 +77,15 @@ function ballMove() {
     ballX += ballSpeedX;
     ballY += ballSpeedY
     
-    if(ballX < 0) { //left side
+    if(ballX < 0 && ballSpeedX < 0.0) { //left side
         ballSpeedX *= -1;
     }
     
-    if(ballX > canvas.width) { //right sight
+    if(ballX > canvas.width && ballSpeedX > 0.0) { //right sight
         ballSpeedX *= -1;
     }
     
-    if(ballY < 0) {  //top edge
+    if(ballY < 0 && ballSpeedY < 0.0) {  //top edge
         ballSpeedY *= -1;
     }
     
@@ -118,7 +118,6 @@ function ballBrickHandling() {
         if(isBrickAtColRow(ballBrickCol, ballBrickRow)) {
             brickGrid[brickIndexUnderBall] = false;
             bricksLeft--;
-            console.log(bricksLeft)
             
             let prevBallX = ballX - ballSpeedX;
             let prevBallY = ballY - ballSpeedY;
