@@ -30,10 +30,10 @@ function updateMousePos(evt) {
     paddleX = mouseX - PADDLE_WIDTH/2;
 
     // cheat / hack to test ball in any position
-    ballX = mouseX;
-    ballY = mouseY;
-    ballSpeedX = 4;
-    ballSpeedY = -4;
+    // ballX = mouseX;
+    // ballY = mouseY;
+    // ballSpeedX = 4;
+    // ballSpeedY = -4;
 }
     
 function brickReset() {
@@ -91,7 +91,18 @@ function ballMove() {
     
     if(ballY > canvas.height) { //bottom edge
         ballReset();
+        brickReset();
     }
+}
+
+function isBrickAtColRow(col, row) {
+    if(col >= 0 && col < BRICK_COLS && row >=0 && row < BRICKS_ROWS) {
+        let brickIndexUnderCord = rowColToArrayIndex(col, row);
+        return brickGrid[brickIndexUnderCord];
+    } else {
+        return false;
+    }
+    
 }
 
 function ballBrickHandling() {
@@ -104,7 +115,7 @@ function ballBrickHandling() {
     if(ballBrickCol >= 0 && ballBrickCol < BRICK_COLS && 
         ballBrickRow >=0 && ballBrickRow < BRICKS_ROWS) {
 
-        if(brickGrid[brickIndexUnderBall]) {
+        if(isBrickAtColRow(ballBrickCol, ballBrickRow)) {
             brickGrid[brickIndexUnderBall] = false;
             bricksLeft--;
             console.log(bricksLeft)
@@ -117,9 +128,7 @@ function ballBrickHandling() {
             let bothTestsFailed = true;
 
             if(prevBrickCol != ballBrickCol) {
-                let adjBrickSide = rowColToArrayIndex(prevBrickCol, ballBrickRow);
-
-                if(brickGrid[adjBrickSide] == false) {
+                if(isBrickAtColRow(prevBrickCol, ballBrickRow) == false) {
                     ballSpeedX *= -1;  
                     bothTestsFailed = false;                  
                 }
@@ -127,9 +136,7 @@ function ballBrickHandling() {
             }
 
             if(prevBrickRow != ballBrickRow) {
-                let adjBrickTopBot = rowColToArrayIndex(ballBrickCol, prevBrickRow)
-
-                if(brickGrid[adjBrickTopBot] == false) {
+                if(isBrickAtColRow(ballBrickCol, prevBrickRow) == false) {
                     ballSpeedY *= -1;
                     bothTestsFailed = false;
                 }
