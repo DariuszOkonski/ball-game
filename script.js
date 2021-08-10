@@ -60,7 +60,7 @@ window.onload = function() {
     canvas.addEventListener('mousemove', updateMousePos);
 
     brickReset();
-    // ballReset();
+    ballReset();
 }
 
 function updateAll() {
@@ -162,6 +162,10 @@ function ballPaddleHandling() {
         var centerOfPaddleX = paddleX + PADDLE_WIDTH / 2;
         var ballDistFromPaddleCenterX = ballX - centerOfPaddleX;
         ballSpeedX = ballDistFromPaddleCenterX * 0.35;
+
+        if(bricksLeft == 0) {
+            brickReset();
+        }
     }
 }
 
